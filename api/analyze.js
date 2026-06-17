@@ -46,7 +46,8 @@ Règles pour le délai : urgence/danger = 1-2j, voirie/propreté = 3-7j, social 
 
     let resultat;
     try {
-      resultat = JSON.parse(texte);
+      const clean = texte.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      resultat = JSON.parse(clean);
     } catch {
       return res.status(500).json({ error: 'Réponse Claude invalide', raw: texte });
     }
