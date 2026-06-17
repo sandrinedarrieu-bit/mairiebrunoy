@@ -41,6 +41,11 @@ Règles strictes :
       })
     });
 
+    if (!response.ok) {
+      const errBody = await response.text();
+      return res.status(500).json({ error: `Erreur API Anthropic (${response.status}) : ${errBody}` });
+    }
+
     const data = await response.json();
     const texte = data.content?.[0]?.text || 'Erreur lors de la génération.';
     return res.status(200).json({ courrier: texte });
