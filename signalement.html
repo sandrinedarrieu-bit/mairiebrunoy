@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Signalement habitant · Brunoy</title>
+<title>Inscription activités municipales · Brunoy</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--blue:#1B3A6B;--blue-light:#DCE9F5;--orange:#E8511A;--orange-light:#FEF0EA;--green:#1A6B3A;--green-light:#DCF5E4;--border:#E2E8F0;--text:#1A1A2E;--muted:#64748B;--bg:#fff;--radius:10px;--radius-sm:6px}
@@ -18,29 +18,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .badge-demo{background:rgba(255,255,255,0.15);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
 .card-body{padding:24px}
 .info-bar{background:var(--blue-light);border:1px solid #B5D4F4;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:20px;font-size:13px;color:var(--blue)}
+.activites{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.activite-btn{border:2px solid var(--border);border-radius:var(--radius-sm);padding:12px 10px;text-align:center;cursor:pointer;background:#fff;transition:all 0.15s;font-size:13px;font-weight:500;color:var(--text)}
+.activite-btn:hover{border-color:var(--blue);color:var(--blue)}
+.activite-btn.selected{border-color:var(--blue);background:var(--blue-light);color:var(--blue)}
+.activite-icon{font-size:22px;margin-bottom:6px;display:block}
 .form-group{margin-bottom:16px}
 label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
 .required{color:var(--orange)}
-input[type=text],input[type=email],select,textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;color:var(--text);background:var(--bg);font-family:inherit;transition:border-color 0.15s}
-input[type=text]:focus,input[type=email]:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue)}
-textarea{resize:vertical;min-height:90px}
+input[type=text],input[type=email],input[type=date],select,textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;color:var(--text);background:var(--bg);font-family:inherit;transition:border-color 0.15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue)}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form-hint{font-size:12px;color:var(--muted);margin-top:4px}
 .btn{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;transition:background 0.15s;margin-top:8px}
 .btn:hover{background:var(--orange)}
+.places{display:flex;align-items:center;gap:8px;background:var(--green-light);border:1px solid #9FE1CB;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--green)}
+.places strong{font-weight:600}
 .success{display:none;background:var(--green-light);border:1px solid #9FE1CB;border-radius:var(--radius);padding:24px;text-align:center}
 .success-icon{font-size:36px;margin-bottom:12px}
 .success h2{color:var(--green);font-size:18px;font-weight:600;margin-bottom:8px}
 .success p{color:#444;font-size:14px;line-height:1.6;margin-bottom:4px}
 .success .ref{font-family:'Courier New',monospace;font-size:13px;background:rgba(0,0,0,0.06);padding:4px 10px;border-radius:4px;color:var(--green)}
-.success-note{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
-.btn-reset{margin-top:14px;background:none;border:1px solid var(--border);color:var(--muted);font-size:13px;padding:8px 16px;border-radius:var(--radius-sm);cursor:pointer;width:auto}
+.btn-reset{margin-top:14px;background:none;border:1px solid var(--border);color:var(--muted);font-size:13px;padding:8px 16px;border-radius:var(--radius-sm);cursor:pointer}
 .btn-reset:hover{background:#F7F8FA}
 .sidebar{margin-top:16px;background:#fff;border:1px solid var(--border);border-left:4px solid var(--orange);border-radius:var(--radius-sm);padding:14px 16px}
 .sidebar h3{font-size:13px;font-weight:600;color:var(--blue);margin-bottom:8px}
 .sidebar p{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px}
-.sidebar p:last-child{margin-bottom:0}
-@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.error{color:#A32D2D;font-size:13px;margin-top:8px;display:none}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}.activites{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -49,100 +54,151 @@ textarea{resize:vertical;min-height:90px}
 
 <div class="card">
   <div class="card-header">
-    <div><h1>Signalement d'un problème</h1><p>Ville de Brunoy — Service en ligne</p></div>
+    <div><h1>Inscription aux activités municipales</h1><p>Service Brunoy Familles — en ligne</p></div>
     <span class="badge-demo">Outil 2 — Démonstration</span>
   </div>
   <div class="card-body">
-    <div class="info-bar">ℹ️ Dans la version réelle, ce formulaire alimenterait automatiquement la base de suivi des agents et enverrait un vrai accusé de réception par email.</div>
+    <div class="info-bar">ℹ️ Dans la version réelle, ce formulaire alimenterait automatiquement la base du service Brunoy Familles et enverrait un accusé de réception par email.</div>
 
     <div id="formZone">
+      <div class="form-group">
+        <label>Activité souhaitée <span class="required">*</span></label>
+        <div class="activites">
+          <button type="button" class="activite-btn" onclick="selectActivite(this,'Périscolaire')" data-places="8">
+            <span class="activite-icon">🏫</span>Périscolaire
+          </button>
+          <button type="button" class="activite-btn" onclick="selectActivite(this,'Centre de loisirs')" data-places="12">
+            <span class="activite-icon">🎨</span>Centre de loisirs
+          </button>
+          <button type="button" class="activite-btn" onclick="selectActivite(this,'Activités seniors')" data-places="5">
+            <span class="activite-icon">🌿</span>Activités seniors
+          </button>
+          <button type="button" class="activite-btn" onclick="selectActivite(this,'Atelier numérique')" data-places="3">
+            <span class="activite-icon">💻</span>Atelier numérique
+          </button>
+          <button type="button" class="activite-btn" onclick="selectActivite(this,'Sport & bien-être')" data-places="15">
+            <span class="activite-icon">⚽</span>Sport & bien-être
+          </button>
+          <button type="button" class="activite-btn" onclick="selectActivite(this,'Bibliothèque jeunesse')" data-places="0">
+            <span class="activite-icon">📚</span>Bibliothèque jeunesse
+          </button>
+        </div>
+      </div>
+
+      <div class="places" id="placesInfo" style="display:none">
+        <span id="placesText"></span>
+      </div>
+
       <div class="form-row">
         <div class="form-group">
           <label>Prénom <span class="required">*</span></label>
-          <input type="text" id="prenom" placeholder="Votre prénom">
+          <input type="text" id="prenom" placeholder="Prénom">
         </div>
         <div class="form-group">
           <label>Nom <span class="required">*</span></label>
-          <input type="text" id="nom" placeholder="Votre nom">
+          <input type="text" id="nom" placeholder="Nom">
         </div>
       </div>
       <div class="form-group">
         <label>Email <span class="required">*</span></label>
         <input type="email" id="email" placeholder="votre@email.fr">
-        <div class="form-hint">Un accusé de réception vous sera envoyé à cette adresse</div>
+        <div class="form-hint">La confirmation d'inscription ou de mise en liste d'attente sera envoyée à cette adresse</div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Téléphone</label>
+          <input type="text" id="tel" placeholder="06 00 00 00 00">
+        </div>
+        <div class="form-group">
+          <label>Date de naissance du bénéficiaire</label>
+          <input type="date" id="naissance">
+        </div>
       </div>
       <div class="form-group">
-        <label>Type de signalement <span class="required">*</span></label>
-        <select id="type">
-          <option value="">— Sélectionnez —</option>
-          <option value="Voirie">Voirie (nid-de-poule, trottoir…)</option>
-          <option value="Éclairage">Éclairage public défectueux</option>
-          <option value="Propreté">Propreté / dépôt sauvage</option>
-          <option value="Espaces verts">Espaces verts</option>
-          <option value="Autre">Autre</option>
-        </select>
+        <label>Commentaire (optionnel)</label>
+        <textarea id="commentaire" placeholder="Besoin particulier, contrainte horaire…" rows="2"></textarea>
       </div>
-      <div class="form-group">
-        <label>Adresse du problème <span class="required">*</span></label>
-        <input type="text" id="adresse" placeholder="Ex : 12 rue de la Paix, Brunoy">
-      </div>
-      <div class="form-group">
-        <label>Description <span class="required">*</span></label>
-        <textarea id="description" placeholder="Décrivez le problème en quelques mots…"></textarea>
-      </div>
-      <button class="btn" onclick="soumettre()">Envoyer le signalement</button>
-      <p id="error" style="color:#A32D2D;font-size:13px;margin-top:8px;display:none">Veuillez remplir tous les champs obligatoires.</p>
+      <button class="btn" onclick="soumettre()">Envoyer la demande d'inscription</button>
+      <p class="error" id="error">Veuillez sélectionner une activité et remplir les champs obligatoires.</p>
     </div>
 
     <div class="success" id="success">
-      <div class="success-icon">✅</div>
-      <h2>Signalement enregistré</h2>
-      <p>Merci <strong id="s-nom"></strong>, votre signalement a bien été reçu.</p>
-      <p>Référence : <span class="ref" id="s-ref"></span></p>
-      <p style="margin-top:8px">Un accusé de réception a été envoyé à <strong id="s-email"></strong></p>
-      <div class="success-note">Délai de traitement estimé : 7 jours ouvrés · Le service <strong id="s-type"></strong> a été notifié</div>
-      <button class="btn-reset" onclick="reset()">Faire un nouveau signalement</button>
+      <div class="success-icon" id="s-icon">✅</div>
+      <h2 id="s-titre">Inscription enregistrée</h2>
+      <p id="s-message"></p>
+      <p style="margin-top:8px">Référence : <span class="ref" id="s-ref"></span></p>
+      <p style="margin-top:6px">Confirmation envoyée à <strong id="s-email"></strong></p>
+      <button class="btn-reset" onclick="reset()">Nouvelle demande</button>
     </div>
   </div>
 </div>
 
 <div class="sidebar">
   <h3>Comment ça fonctionne en conditions réelles</h3>
-  <p><strong>Ce que fait l'habitant :</strong> remplit ce formulaire depuis son téléphone ou ordinateur. Reçoit immédiatement un email de confirmation avec sa référence de dossier.</p>
-  <p><strong>Ce que font les agents :</strong> le signalement apparaît automatiquement dans le tableau de bord (outil 1), assigné au bon service. Aucune ressaisie manuelle.</p>
-  <p><strong>Limite :</strong> ce formulaire ne convient qu'aux signalements standardisables. Les urgences et situations complexes nécessitent un appel direct au service concerné.</p>
+  <p><strong>Ce que fait l'habitant :</strong> remplit ce formulaire depuis son téléphone ou ordinateur. Reçoit immédiatement une confirmation d'inscription ou de mise en liste d'attente selon les places disponibles.</p>
+  <p><strong>Ce que font les agents :</strong> les inscriptions arrivent automatiquement dans leur base de suivi, sans ressaisie. Les listes d'attente se gèrent automatiquement par ordre d'arrivée.</p>
+  <p><strong>Pourquoi cet outil :</strong> le signalement d'incident existe déjà sur le site de Brunoy. Ce formulaire couvre un besoin non encore digitalisé — les inscriptions aux activités du service Brunoy Familles.</p>
 </div>
 </div>
 
 <script>
-let counter = 100;
-function soumettre(){
-  const p=document.getElementById("prenom").value.trim();
-  const n=document.getElementById("nom").value.trim();
-  const e=document.getElementById("email").value.trim();
-  const t=document.getElementById("type").value;
-  const a=document.getElementById("adresse").value.trim();
-  const desc=document.getElementById("description").value.trim();
-  if(!p||!n||!e||!t||!a||!desc){document.getElementById("error").style.display="block";return}
-  document.getElementById("error").style.display="none";
-  counter++;
-  const ref="SIG-"+String(counter).padStart(3,"0");
-  document.getElementById("s-nom").textContent=p+" "+n;
-  document.getElementById("s-ref").textContent=ref;
-  document.getElementById("s-email").textContent=e;
-  document.getElementById("s-type").textContent=t;
-  document.getElementById("formZone").style.display="none";
-  document.getElementById("success").style.display="block";
+let activiteSelectee = null;
+let placesDisponibles = 0;
+let counter = 200;
+
+function selectActivite(btn, nom) {
+  document.querySelectorAll('.activite-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  activiteSelectee = nom;
+  placesDisponibles = parseInt(btn.dataset.places);
+  const info = document.getElementById('placesInfo');
+  const txt = document.getElementById('placesText');
+  info.style.display = 'flex';
+  if (placesDisponibles === 0) {
+    info.style.background = '#FCEBEB';
+    info.style.borderColor = '#F7C1C1';
+    info.style.color = '#A32D2D';
+    txt.innerHTML = `<strong>Liste d'attente</strong> — Plus de places disponibles pour ${nom}. Votre demande sera enregistrée en liste d'attente.`;
+  } else {
+    info.style.background = '#DCF5E4';
+    info.style.borderColor = '#9FE1CB';
+    info.style.color = '#1A6B3A';
+    txt.innerHTML = `<strong>${placesDisponibles} place${placesDisponibles > 1 ? 's' : ''} disponible${placesDisponibles > 1 ? 's' : ''}</strong> pour ${nom}.`;
+  }
 }
-function reset(){
-  document.getElementById("prenom").value="";
-  document.getElementById("nom").value="";
-  document.getElementById("email").value="";
-  document.getElementById("type").value="";
-  document.getElementById("adresse").value="";
-  document.getElementById("description").value="";
-  document.getElementById("formZone").style.display="block";
-  document.getElementById("success").style.display="none";
+
+function soumettre() {
+  const p = document.getElementById('prenom').value.trim();
+  const n = document.getElementById('nom').value.trim();
+  const e = document.getElementById('email').value.trim();
+  if (!activiteSelectee || !p || !n || !e) {
+    document.getElementById('error').style.display = 'block'; return;
+  }
+  document.getElementById('error').style.display = 'none';
+  counter++;
+  const ref = 'INS-' + String(counter).padStart(3,'0');
+  const estListeAttente = placesDisponibles === 0;
+  document.getElementById('s-icon').textContent = estListeAttente ? '📋' : '✅';
+  document.getElementById('s-titre').textContent = estListeAttente ? 'Mis en liste d\'attente' : 'Inscription enregistrée';
+  document.getElementById('s-message').innerHTML = estListeAttente
+    ? `<strong>${p} ${n}</strong>, votre demande pour <strong>${activiteSelectee}</strong> a bien été reçue. Vous serez contacté(e) dès qu'une place se libère.`
+    : `<strong>${p} ${n}</strong> est inscrit(e) à l'activité <strong>${activiteSelectee}</strong>.`;
+  document.getElementById('s-ref').textContent = ref;
+  document.getElementById('s-email').textContent = e;
+  document.getElementById('formZone').style.display = 'none';
+  document.getElementById('success').style.display = 'block';
+  document.getElementById('success').style.background = estListeAttente ? '#FEF0EA' : '#DCF5E4';
+  document.getElementById('success').style.borderColor = estListeAttente ? '#F5C98A' : '#9FE1CB';
+  document.getElementById('s-titre').style.color = estListeAttente ? '#854F0B' : '#1A6B3A';
+}
+
+function reset() {
+  activiteSelectee = null;
+  document.querySelectorAll('.activite-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('placesInfo').style.display = 'none';
+  ['prenom','nom','email','tel','naissance','commentaire'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('formZone').style.display = 'block';
+  document.getElementById('success').style.display = 'none';
 }
 </script>
 </body>
