@@ -17,14 +17,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .card-header p{color:#A0C4E8;font-size:13px;margin-top:3px}
 .card-body{padding:20px 24px}
 .info-bar{background:var(--orange-light);border:1px solid #F5C98A;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:20px;font-size:13px;color:#854F0B}
-
-/* TABS MODE */
-.mode-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:20px}
+.mode-tabs{display:flex;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:20px}
 .mode-tab{flex:1;padding:10px 16px;background:#fff;border:none;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all 0.15s;text-align:center;border-right:1px solid var(--border)}
 .mode-tab:last-child{border-right:none}
 .mode-tab.active{background:var(--blue);color:#fff}
 .mode-tab:hover:not(.active){background:var(--blue-light);color:var(--blue)}
-
 .form-group{margin-bottom:14px}
 label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
 .form-hint{font-size:12px;color:var(--muted);margin-top:4px}
@@ -32,19 +29,14 @@ input[type=text],select,textarea{width:100%;padding:10px 12px;border:1px solid v
 input[type=text]:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue)}
 textarea{resize:vertical;min-height:80px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-
-/* Mode prédéfini */
 .ex-chips{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
 .ex-chip{font-size:12px;padding:5px 12px;background:var(--blue-light);color:#0C447C;border:1px solid #B5D4F4;border-radius:20px;cursor:pointer;font-weight:500;transition:all 0.15s}
 .ex-chip:hover,.ex-chip.selected{background:var(--blue);color:#fff;border-color:var(--blue)}
-
-/* Mode libre */
 .libre-note{background:#F7F8FA;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--muted);line-height:1.6}
 .libre-note strong{color:var(--blue)}
 .libre-examples{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .libre-ex{font-size:12px;padding:4px 10px;background:#fff;color:var(--muted);border:1px solid var(--border);border-radius:20px;cursor:pointer}
 .libre-ex:hover{border-color:var(--blue);color:var(--blue)}
-
 .btn{padding:10px 20px;background:var(--blue);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;transition:background 0.15s}
 .btn:hover:not(:disabled){background:var(--orange)}
 .btn:disabled{opacity:0.5;cursor:not-allowed}
@@ -58,6 +50,7 @@ textarea{resize:vertical;min-height:80px}
 .copy-btn:hover{background:var(--blue-light);color:var(--blue)}
 .result-body{padding:20px 24px;font-size:14px;line-height:1.8;white-space:pre-wrap;color:var(--text);min-height:120px}
 .warning{background:#FAEEDA;border:1px solid #FAC775;border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:#633806;margin-top:12px}
+.ia-badge{display:inline-flex;align-items:center;gap:5px;background:var(--blue-light);color:#0C447C;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:12px}
 .sidebar{background:#fff;border:1px solid var(--border);border-left:4px solid var(--orange);border-radius:var(--radius-sm);padding:14px 16px;margin-top:16px}
 .sidebar h3{font-size:13px;font-weight:600;color:var(--blue);margin-bottom:8px}
 .sidebar p{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px}
@@ -76,7 +69,6 @@ textarea{resize:vertical;min-height:80px}
   <div class="card-body">
     <div class="info-bar">⚠️ L'agent doit relire et valider le courrier avant envoi. Ne pas saisir de données personnelles d'habitants dans cet outil.</div>
 
-    <!-- TABS -->
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('predefini')">Cas prédéfinis</button>
       <button class="mode-tab" onclick="setMode('libre')">Je décris ma situation</button>
@@ -114,19 +106,19 @@ textarea{resize:vertical;min-height:80px}
     <!-- MODE LIBRE -->
     <div id="zone-libre" style="display:none">
       <div class="libre-note">
-        <strong>Comment ça marche :</strong> écrivez en quelques mots ce que vous voulez dire, comme vous l'expliqueriez à un collègue. L'outil se charge de rédiger le courrier complet.
-        <div class="libre-examples" id="libre-examples">
-          <span class="libre-ex" onclick="setLibre(this.textContent)">habitant demande acte de naissance, déjà envoyé</span>
-          <span class="libre-ex" onclick="setLibre(this.textContent)">refus inscription liste électorale, pièces manquantes</span>
-          <span class="libre-ex" onclick="setLibre(this.textContent)">rappel pour dossier incomplet, délai dépassé</span>
-          <span class="libre-ex" onclick="setLibre(this.textContent)">fermeture mairie vendredi 20 juin après-midi</span>
-          <span class="libre-ex" onclick="setLibre(this.textContent)">convocation rendez-vous urbanisme lundi matin</span>
+        <strong>Comment ça marche :</strong> décrivez votre situation en quelques mots, comme vous l'expliqueriez à un collègue. L'IA rédige le courrier complet adapté à votre contexte.
+        <div class="libre-examples">
+          <span class="libre-ex" onclick="setLibre(this.textContent)">un habitant ne reçoit plus le journal municipal</span>
+          <span class="libre-ex" onclick="setLibre(this.textContent)">demande de salle refusée, déjà réservée</span>
+          <span class="libre-ex" onclick="setLibre(this.textContent)">travaux de voirie prévus rue du Réveillon</span>
+          <span class="libre-ex" onclick="setLibre(this.textContent)">inscription périscolaire acceptée</span>
+          <span class="libre-ex" onclick="setLibre(this.textContent)">dossier allocation logement incomplet</span>
         </div>
       </div>
       <div class="form-group">
         <label>Décrivez votre situation</label>
-        <textarea id="objet-libre" placeholder="Ex : habitant réclame son permis, on l'a envoyé il y a 3 semaines, on lui demande de vérifier..." rows="4"></textarea>
-        <div class="form-hint">Pas besoin de soigner la formulation — l'outil s'en charge.</div>
+        <textarea id="objet-libre" placeholder="Ex : un habitant se plaint de ne plus recevoir le journal municipal depuis 2 mois..." rows="4"></textarea>
+        <div class="form-hint">Pas besoin de soigner la formulation — l'IA s'en charge.</div>
       </div>
       <div class="form-group">
         <label>Ton souhaité</label>
@@ -136,6 +128,7 @@ textarea{resize:vertical;min-height:80px}
           <option value="ferme">Ferme mais respectueux</option>
         </select>
       </div>
+      <div class="ia-badge">✦ Courrier généré par intelligence artificielle</div>
       <button class="btn" id="genBtn2" onclick="genererLibre()">Générer le courrier</button>
     </div>
   </div>
@@ -157,28 +150,26 @@ textarea{resize:vertical;min-height:80px}
 
 <div class="sidebar">
   <h3>Comment ça fonctionne en conditions réelles</h3>
-  <p><strong>Ce que fait l'agent :</strong> choisit un cas courant parmi les prédéfinis, ou décrit sa situation en quelques mots comme il le dirait à un collègue. L'outil rédige automatiquement un courrier complet.</p>
+  <p><strong>Ce que fait l'agent :</strong> choisit un cas courant parmi les prédéfinis, ou décrit sa situation en quelques mots comme il le dirait à un collègue. L'IA rédige automatiquement un courrier complet adapté au contexte.</p>
   <p><strong>Ce que l'agent doit faire :</strong> relire, compléter les informations du destinataire, ajuster si besoin, puis copier dans son logiciel habituel.</p>
   <p><strong>Limite :</strong> ne pas utiliser pour des courriers à enjeu juridique fort sans validation par un responsable.</p>
 </div>
 </div>
 
 <script>
-let modeActuel = 'predefini';
 let casSelectionne = null;
 
 function setMode(mode) {
-  modeActuel = mode;
-  document.querySelectorAll('.mode-tab').forEach((t,i) => t.classList.toggle('active', (i===0&&mode==='predefini')||(i===1&&mode==='libre')));
-  document.getElementById('zone-predefini').style.display = mode==='predefini' ? 'block' : 'none';
-  document.getElementById('zone-libre').style.display = mode==='libre' ? 'block' : 'none';
-  document.getElementById('resultCard').style.display = 'none';
-  document.getElementById('warning').style.display = 'none';
+  document.querySelectorAll('.mode-tab').forEach((t,i) => t.classList.toggle('active',(i===0&&mode==='predefini')||(i===1&&mode==='libre')));
+  document.getElementById('zone-predefini').style.display = mode==='predefini'?'block':'none';
+  document.getElementById('zone-libre').style.display = mode==='libre'?'block':'none';
+  document.getElementById('resultCard').style.display='none';
+  document.getElementById('warning').style.display='none';
 }
 
-function setLibre(txt) { document.getElementById('objet-libre').value = txt; }
+function setLibre(txt){ document.getElementById('objet-libre').value=txt; }
 
-const exemples = {
+const exemples={
   reponse:["Réponse favorable à une demande de certificat de résidence","Réponse à une demande sur les horaires de la mairie","Réponse à une réclamation sur la collecte des ordures"],
   refus:["Refus d'inscription sur les listes électorales, dossier incomplet","Refus d'autorisation de terrasse, règlement de voirie","Refus de dérogation scolaire, secteur complet"],
   convocation:["Convocation pour instruction d'une demande de permis","Invitation à une réunion publique sur l'aménagement","Convocation pour état des lieux d'un logement"],
@@ -186,21 +177,21 @@ const exemples = {
   relance:["Relance pour pièces manquantes dans un dossier","Rappel d'une échéance de paiement","Relance pour rendez-vous non honoré"]
 };
 
-function updateChips() {
-  casSelectionne = null;
-  const t = document.getElementById('type').value;
-  document.getElementById('chips').innerHTML = exemples[t].map(e =>
-    `<button class="ex-chip" onclick="selectChip(this,'${e.replace(/'/g,"\\'")}'">${e}</button>`
+function updateChips(){
+  casSelectionne=null;
+  const t=document.getElementById('type').value;
+  document.getElementById('chips').innerHTML=exemples[t].map(e=>
+    `<button class="ex-chip" onclick="selectChip(this,'${e.replace(/'/g,"\\'")}')">${e}</button>`
   ).join('');
 }
 
-function selectChip(btn, val) {
-  document.querySelectorAll('.ex-chip').forEach(c => c.classList.remove('selected'));
+function selectChip(btn,val){
+  document.querySelectorAll('.ex-chip').forEach(c=>c.classList.remove('selected'));
   btn.classList.add('selected');
-  casSelectionne = val;
+  casSelectionne=val;
 }
 
-const courriers = {
+const courriers={
   reponse:{
     formel:`Madame, Monsieur,\n\nNous avons bien reçu votre demande en date du [DATE] concernant [OBJET].\n\nNous avons le plaisir de vous informer que celle-ci a été examinée par nos services et qu'il y est donné une suite favorable.\n\n[DOCUMENT/INFORMATION DEMANDÉ(E)] vous sera adressé(e) dans un délai de [DÉLAI] jours ouvrés à compter de la présente.\n\nNous restons à votre disposition pour tout renseignement complémentaire.\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\n[SERVICE CONCERNÉ]\nVille de Brunoy`,
     bienveillant:`Madame, Monsieur,\n\nNous avons bien pris en compte votre demande du [DATE] et nous vous en remercions.\n\nNous avons le plaisir de vous confirmer qu'elle a reçu une réponse favorable. [PRÉCISION SUR LA SUITE DONNÉE]\n\nN'hésitez pas à nous contacter si vous avez des questions.\n\nBien cordialement,\n\n[SERVICE CONCERNÉ]\nVille de Brunoy`
@@ -209,68 +200,82 @@ const courriers = {
     formel:`Madame, Monsieur,\n\nNous accusons réception de votre demande du [DATE] relative à [OBJET].\n\nAprès examen de votre dossier, nous sommes dans l'obligation de vous informer que nous ne pouvons pas y donner suite favorable pour le(s) motif(s) suivant(s) :\n\n— [MOTIF DU REFUS]\n\nVous disposez d'un délai de [DÉLAI] pour contester cette décision auprès de [AUTORITÉ COMPÉTENTE].\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\n[SERVICE CONCERNÉ]\nVille de Brunoy`,
     ferme:`Madame, Monsieur,\n\nNous avons bien reçu votre demande du [DATE] concernant [OBJET].\n\nAprès instruction, il nous est impossible d'y donner suite favorable. En effet, [MOTIF CLAIR ET PRÉCIS].\n\nCette décision est définitive, sauf éléments nouveaux. Vous pouvez adresser un recours à [SERVICE/AUTORITÉ] dans un délai de [DÉLAI].\n\nCordialement,\n\n[SERVICE CONCERNÉ]\nVille de Brunoy`
   },
-  convocation:{
-    formel:`Madame, Monsieur,\n\nNous avons l'honneur de vous convoquer à un rendez-vous qui se tiendra :\n\nLe : [DATE]\nÀ : [HEURE]\nAdresse : Mairie de Brunoy, [SALLE/SERVICE]\n\nL'objet de cette convocation est : [OBJET]\n\nNous vous remercions de vous présenter muni(e) des documents suivants : [LISTE DES PIÈCES].\n\nEn cas d'impossibilité, contactez notre service au [TÉLÉPHONE].\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\n[SERVICE CONCERNÉ]\nVille de Brunoy`
-  },
-  information:{
-    formel:`Madame, Monsieur,\n\nNous souhaitons porter à votre connaissance l'information suivante :\n\n[INFORMATION PRINCIPALE]\n\n[DÉTAILS COMPLÉMENTAIRES SI NÉCESSAIRE]\n\nPour tout renseignement, notre service est joignable au [TÉLÉPHONE] ou par email à [EMAIL].\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\n[SERVICE CONCERNÉ]\nVille de Brunoy`
-  },
-  relance:{
-    ferme:`Madame, Monsieur,\n\nSauf erreur de notre part, nous n'avons pas reçu à ce jour [PIÈCE/INFORMATION ATTENDUE] concernant votre dossier [RÉFÉRENCE].\n\nSans réponse de votre part dans un délai de [DÉLAI] jours, nous serons contraints de [CONSÉQUENCE].\n\nNous vous invitons à régulariser votre situation en contactant notre service au [TÉLÉPHONE].\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\n[SERVICE CONCERNÉ]\nVille de Brunoy`
-  }
+  convocation:{formel:`Madame, Monsieur,\n\nNous avons l'honneur de vous convoquer à un rendez-vous qui se tiendra :\n\nLe : [DATE]\nÀ : [HEURE]\nAdresse : Mairie de Brunoy, [SALLE/SERVICE]\n\nL'objet de cette convocation est : [OBJET]\n\nNous vous remercions de vous présenter muni(e) des documents suivants : [LISTE DES PIÈCES].\n\nEn cas d'impossibilité, contactez notre service au [TÉLÉPHONE].\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\n[SERVICE CONCERNÉ]\nVille de Brunoy`},
+  information:{formel:`Madame, Monsieur,\n\nNous souhaitons porter à votre connaissance l'information suivante :\n\n[INFORMATION PRINCIPALE]\n\n[DÉTAILS COMPLÉMENTAIRES SI NÉCESSAIRE]\n\nPour tout renseignement, notre service est joignable au [TÉLÉPHONE] ou par email à [EMAIL].\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\n[SERVICE CONCERNÉ]\nVille de Brunoy`},
+  relance:{ferme:`Madame, Monsieur,\n\nSauf erreur de notre part, nous n'avons pas reçu à ce jour [PIÈCE/INFORMATION ATTENDUE] concernant votre dossier [RÉFÉRENCE].\n\nSans réponse de votre part dans un délai de [DÉLAI] jours, nous serons contraints de [CONSÉQUENCE].\n\nNous vous invitons à régulariser votre situation en contactant notre service au [TÉLÉPHONE].\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\n[SERVICE CONCERNÉ]\nVille de Brunoy`}
 };
 
-// Courriers générés à partir d'une description libre
-const courriersLibres = {
-  "habitant demande acte de naissance, déjà envoyé": `Madame, Monsieur,\n\nNous avons bien pris note de votre demande concernant l'acte de naissance sollicité.\n\nNous vous informons que ce document vous a été adressé par courrier le [DATE D'ENVOI] à l'adresse figurant dans votre dossier.\n\nNous vous invitons à vérifier votre boîte aux lettres ainsi qu'auprès de votre entourage. Si vous ne l'avez toujours pas reçu passé un délai raisonnable, n'hésitez pas à nous contacter afin que nous puissions procéder à un nouvel envoi.\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\nService État civil\nVille de Brunoy`,
-  "refus inscription liste électorale, pièces manquantes": `Madame, Monsieur,\n\nNous accusons réception de votre demande d'inscription sur les listes électorales de la commune de Brunoy.\n\nAprès examen de votre dossier, nous sommes dans l'obligation de vous informer que nous ne pouvons pas y donner suite favorable en l'état, pour le motif suivant :\n\n— Pièces justificatives manquantes : [PRÉCISER LES PIÈCES]\n\nNous vous invitons à compléter votre dossier et à nous le retourner dans les meilleurs délais.\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\nService État civil\nVille de Brunoy`,
-  "rappel pour dossier incomplet, délai dépassé": `Madame, Monsieur,\n\nSauf erreur de notre part, votre dossier relatif à [OBJET] demeure incomplet à ce jour, malgré notre courrier du [DATE].\n\nNous vous rappelons que les pièces suivantes sont toujours attendues :\n\n— [PIÈCES MANQUANTES]\n\nSans réponse de votre part dans un délai de 15 jours à compter de la présente, nous serons contraints de classer votre dossier sans suite.\n\nNous restons à votre disposition pour tout renseignement.\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\n[SERVICE CONCERNÉ]\nVille de Brunoy`,
-  "fermeture mairie vendredi 20 juin après-midi": `Madame, Monsieur,\n\nNous vous informons que la Mairie de Brunoy sera exceptionnellement fermée le vendredi 20 juin à partir de 12h00.\n\nNous vous prions de bien vouloir prendre note de cette fermeture et nous excusons pour la gêne occasionnée.\n\nPour toute urgence, vous pouvez nous contacter par email à [EMAIL] ou nous joindre dès le lundi suivant aux horaires habituels d'ouverture.\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\nLa Mairie de Brunoy`,
-  "convocation rendez-vous urbanisme lundi matin": `Madame, Monsieur,\n\nNous avons l'honneur de vous convoquer à un rendez-vous avec le service Urbanisme de la Ville de Brunoy :\n\nLe : lundi [DATE]\nÀ : [HEURE]\nAdresse : Mairie de Brunoy, Service Urbanisme, Place de la Mairie\n\nCe rendez-vous a pour objet : [PRÉCISER L'OBJET]\n\nNous vous remercions de vous présenter muni(e) de votre pièce d'identité et de tout document relatif à votre dossier.\n\nEn cas d'empêchement, contactez-nous au 01 69 39 89 42 afin de convenir d'une nouvelle date.\n\nVeuillez agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\nService Urbanisme\nVille de Brunoy`
-};
-
-function genererPredefini() {
-  if (!casSelectionne) { alert('Veuillez sélectionner un cas courant.'); return; }
-  const type = document.getElementById('type').value;
-  const ton = document.getElementById('ton').value;
-  lancer(() => {
-    const pool = courriers[type];
-    return pool ? pool[ton] || pool[Object.keys(pool)[0]] : "Courrier non disponible.";
+function genererPredefini(){
+  if(!casSelectionne){alert('Veuillez sélectionner un cas courant.');return;}
+  const type=document.getElementById('type').value;
+  const ton=document.getElementById('ton').value;
+  lancer(()=>{
+    const pool=courriers[type];
+    return pool?pool[ton]||pool[Object.keys(pool)[0]]:"Courrier non disponible.";
   });
 }
 
-function genererLibre() {
-  const objet = document.getElementById('objet-libre').value.trim();
-  if (!objet) { document.getElementById('objet-libre').style.borderColor='#A32D2D'; return; }
+async function genererLibre(){
+  const objet=document.getElementById('objet-libre').value.trim();
+  if(!objet){document.getElementById('objet-libre').style.borderColor='#A32D2D';return;}
   document.getElementById('objet-libre').style.borderColor='';
-  lancer(() => {
-    // Cherche une correspondance dans les courriers libres prédéfinis
-    const match = Object.keys(courriersLibres).find(k => objet.toLowerCase().includes(k.split(' ')[0].toLowerCase()));
-    if (match) return courriersLibres[match];
-    // Génération générique basée sur le contenu
-    const ton = document.getElementById('ton-libre').value;
-    return `Madame, Monsieur,\n\nSuite à votre situation concernant : "${objet}"\n\nNous avons bien pris en compte votre demande et nos services l'examinent dans les meilleurs délais.\n\nNous reviendrons vers vous prochainement. Pour tout renseignement complémentaire, contactez-nous au [TÉLÉPHONE].\n\n${ton==='bienveillant'?'Bien cordialement,':'Veuillez agréer, Madame, Monsieur, l\'expression de nos salutations distinguées.'}\n\n[SERVICE CONCERNÉ]\nVille de Brunoy`;
-  });
-}
+  const ton=document.getElementById('ton-libre').value;
+  const tonLabel=ton==='formel'?'formel et administratif':ton==='bienveillant'?'bienveillant et accessible':'ferme mais respectueux';
 
-function lancer(getFn) {
-  document.querySelectorAll('.btn').forEach(b => b.disabled=true);
+  document.querySelectorAll('.btn').forEach(b=>b.disabled=true);
   document.getElementById('loading').style.display='block';
   document.getElementById('resultCard').style.display='none';
   document.getElementById('warning').style.display='none';
-  setTimeout(() => {
-    const texte = getFn();
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        model:"claude-sonnet-4-6",
+        max_tokens:1000,
+        system:`Tu es un assistant de rédaction pour les agents de la Mairie de Brunoy (91800, Essonne). Tu rédiges des courriers administratifs officiels destinés aux habitants. 
+Règles strictes :
+- Utilise toujours la formule de politesse complète adaptée au ton demandé
+- Termine toujours par "[SERVICE CONCERNÉ]\\nVille de Brunoy"
+- Mets entre [crochets] les informations à compléter par l'agent (dates, noms, références)
+- Ne jamais inventer de données personnelles
+- Ton ${tonLabel}
+- Réponds UNIQUEMENT avec le texte du courrier, sans introduction ni commentaire`,
+        messages:[{role:"user",content:`Rédige un courrier pour la situation suivante : ${objet}`}]
+      })
+    });
+    const data=await response.json();
+    const texte=data.content?.[0]?.text||"Erreur lors de la génération du courrier.";
     document.getElementById('loading').style.display='none';
     document.getElementById('resultText').textContent=texte;
     document.getElementById('resultCard').style.display='block';
     document.getElementById('warning').style.display='block';
-    document.querySelectorAll('.btn').forEach(b => b.disabled=false);
-  }, 1200);
+  } catch(e){
+    document.getElementById('loading').style.display='none';
+    document.getElementById('resultText').textContent="Erreur de connexion. Veuillez réessayer.";
+    document.getElementById('resultCard').style.display='block';
+  }
+  document.querySelectorAll('.btn').forEach(b=>b.disabled=false);
 }
 
-function copier() {
-  navigator.clipboard.writeText(document.getElementById('resultText').textContent).then(() => {
-    const btn = document.querySelector('.copy-btn');
+function lancer(getFn){
+  document.querySelectorAll('.btn').forEach(b=>b.disabled=true);
+  document.getElementById('loading').style.display='block';
+  document.getElementById('resultCard').style.display='none';
+  document.getElementById('warning').style.display='none';
+  setTimeout(()=>{
+    document.getElementById('loading').style.display='none';
+    document.getElementById('resultText').textContent=getFn();
+    document.getElementById('resultCard').style.display='block';
+    document.getElementById('warning').style.display='block';
+    document.querySelectorAll('.btn').forEach(b=>b.disabled=false);
+  },1200);
+}
+
+function copier(){
+  navigator.clipboard.writeText(document.getElementById('resultText').textContent).then(()=>{
+    const btn=document.querySelector('.copy-btn');
     btn.textContent='Copié !';
     setTimeout(()=>btn.textContent='Copier',2000);
   });
