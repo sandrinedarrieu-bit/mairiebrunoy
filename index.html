@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tableau de bord — Demandes habitants · Ville de Brunoy</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue: #1B3A6B;
+    --blue-light: #DCE9F5;
+    --orange: #E8511A;
+    --orange-light: #FEF0EA;
+    --green: #1A6B3A;
+    --green-light: #DCF5E4;
+    --red: #A32D2D;
+    --red-light: #FCEBEB;
+    --amber: #854F0B;
+    --amber-light: #FAEEDA;
+    --gray: #F7F8FA;
+    --border: #E2E8F0;
+    --text: #1A1A2E;
+    --text-muted: #64748B;
+    --text-faint: #94A3B8;
+    --bg: #FFFFFF;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F1F4F9; color: var(--text); font-size: 14px; min-height: 100vh; padding: 24px; }
+  .page { max-width: 1000px; margin: 0 auto; }
+
+  /* HEADER */
+  .header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; }
+  .header h1 { font-size: 20px; font-weight: 600; color: var(--blue); }
+  .header p { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+  .badge-demo { background: var(--orange-light); color: var(--orange); font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid #F5C98A; white-space: nowrap; }
+
+  /* METRICS */
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .metric { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+  .metric-label { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+  .metric-value { font-size: 26px; font-weight: 600; line-height: 1; }
+  .metric-sub { font-size: 11px; color: var(--text-faint); margin-top: 4px; }
+  .m-blue .metric-value { color: var(--blue); }
+  .m-orange .metric-value { color: var(--orange); }
+  .m-red .metric-value { color: var(--red); }
+  .m-green .metric-value { color: var(--green); }
+
+  /* SOURCE INFO */
+  .source-info { background: var(--blue-light); border: 1px solid #B5D4F4; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--blue); }
+  .source-info strong { font-weight: 600; }
+
+  /* FILTERS */
+  .filters { display: flex; gap: 10px; margin-bottom: 16px; align-items: center; flex-wrap: wrap; }
+  .filters label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+  .filters select { font-size: 13px; padding: 6px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; }
+  .filters select:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+
+  /* TABLE */
+  .table-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  thead { background: var(--gray); }
+  th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--gray); }
+  .ref { font-family: 'Courier New', monospace; font-size: 12px; color: var(--text-muted); }
+  .agent-cell { color: var(--text-muted); font-size: 13px; }
+
+  /* BADGES */
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
+  .b-new { background: var(--blue-light); color: #0C447C; }
+  .b-progress { background: var(--amber-light); color: var(--amber); }
+  .b-done { background: var(--green-light); color: var(--green); }
+  .b-late { background: var(--red-light); color: var(--red); }
+
+  /* DELAI */
+  .d-ok { color: var(--green); font-weight: 600; }
+  .d-warn { color: var(--amber); font-weight: 600; }
+  .d-late { color: var(--red); font-weight: 600; }
+
+  .empty { text-align: center; padding: 2.5rem; color: var(--text-faint); font-size: 13px; }
+  .footer { font-size: 11px; color: var(--text-faint); margin-top: 12px; text-align: right; }
+
+  /* SOURCE PANEL */
+  .source-panel { margin-top: 24px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; }
+  .source-panel h3 { font-size: 13px; font-weight: 600; color: var(--blue); margin-bottom: 12px; }
+  .source-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .source-card { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; }
+  .source-card-title { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .source-card-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+  .source-limit { background: var(--orange-light); border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 12px; font-size: 12px; color: var(--amber); }
+  .source-limit strong { font-weight: 600; color: var(--orange); }
+
+  @media (max-width: 700px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .source-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>Suivi des demandes habitants</h1>
+      <p>Tableau de bord de pilotage — Ville de Brunoy · Données fictives</p>
+    </div>
+    <span class="badge-demo">Démonstration</span>
+  </div>
+
+  <div class="source-info">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+    <span>Dans la version réelle, ces données proviendraient d'un <strong>formulaire rempli par les agents</strong> à chaque demande reçue, mis à jour automatiquement dans cette interface.</span>
+  </div>
+
+  <div class="metrics" id="metrics"></div>
+
+  <div class="filters">
+    <label>Service</label>
+    <select id="filterService" onchange="render()">
+      <option value="">Tous les services</option>
+      <option value="Voirie">Voirie</option>
+      <option value="État civil">État civil</option>
+      <option value="Social">Social</option>
+      <option value="Urbanisme">Urbanisme</option>
+      <option value="Propreté">Propreté</option>
+    </select>
+    <label>Statut</label>
+    <select id="filterStatut" onchange="render()">
+      <option value="">Tous les statuts</option>
+      <option value="Nouvelle">Nouvelle</option>
+      <option value="En cours">En cours</option>
+      <option value="Traitée">Traitée</option>
+      <option value="En retard">En retard</option>
+    </select>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Réf.</th>
+          <th>Objet de la demande</th>
+          <th>Service</th>
+          <th>Reçue le</th>
+          <th>Délai (j)</th>
+          <th>Statut</th>
+          <th>Agent</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <p class="footer">Mis à jour le 17 juin 2026 — 12 demandes enregistrées</p>
+
+  <div class="source-panel">
+    <h3>Comment ces données seraient collectées en conditions réelles</h3>
+    <div class="source-grid">
+      <div class="source-card">
+        <div class="source-card-title">Origine des données</div>
+        <div class="source-card-desc">Un formulaire simple rempli par les agents à chaque réception d'une demande habitant — par téléphone, email ou guichet. Aucune ressaisie, aucune compétence technique requise.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-card-title">Mise à jour</div>
+        <div class="source-card-desc">Chaque soumission de formulaire alimente automatiquement une base de données. Le tableau de bord se met à jour en temps réel, sans intervention manuelle.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-card-title">Qui peut utiliser cet outil</div>
+        <div class="source-card-desc">Les agents pour déclarer et suivre leurs dossiers. Les responsables de service pour piloter les délais. Les élus pour un reporting mensuel en un coup d'œil.</div>
+      </div>
+    </div>
+    <div class="source-limit">
+      <strong>Limite à anticiper :</strong> cet outil ne se connecte pas aux logiciels métier existants de la mairie (Berger-Levrault, Civil Net…). Les agents saisissent manuellement — c'est volontaire pour rester simple et maintenable par l'équipe.
+    </div>
+  </div>
+
+</div>
+
+<script>
+const demandes = [
+  { ref:"DEM-001", objet:"Nid-de-poule rue de la Paix", service:"Voirie", date:"2026-06-02", delai:15, statut:"En retard", agent:"M. Lambert" },
+  { ref:"DEM-002", objet:"Certificat de résidence", service:"État civil", date:"2026-06-10", delai:3, statut:"Traitée", agent:"Mme Petit" },
+  { ref:"DEM-003", objet:"Aide alimentaire d'urgence", service:"Social", date:"2026-06-12", delai:5, statut:"En cours", agent:"Mme Morel" },
+  { ref:"DEM-004", objet:"Déclaration de travaux", service:"Urbanisme", date:"2026-06-08", delai:30, statut:"En cours", agent:"M. Dupuis" },
+  { ref:"DEM-005", objet:"Dépôt sauvage allée des Roses", service:"Propreté", date:"2026-06-14", delai:7, statut:"Nouvelle", agent:"—" },
+  { ref:"DEM-006", objet:"Éclairage défectueux place du Marché", service:"Voirie", date:"2026-06-05", delai:10, statut:"En retard", agent:"M. Lambert" },
+  { ref:"DEM-007", objet:"Acte de naissance", service:"État civil", date:"2026-06-15", delai:2, statut:"Traitée", agent:"Mme Petit" },
+  { ref:"DEM-008", objet:"Permis de construire", service:"Urbanisme", date:"2026-05-20", delai:60, statut:"En cours", agent:"M. Dupuis" },
+  { ref:"DEM-009", objet:"Ramassage encombrants", service:"Propreté", date:"2026-06-16", delai:5, statut:"Nouvelle", agent:"—" },
+  { ref:"DEM-010", objet:"Aide au logement", service:"Social", date:"2026-06-09", delai:15, statut:"En cours", agent:"Mme Morel" },
+  { ref:"DEM-011", objet:"Trottoir dégradé rue Victor Hugo", service:"Voirie", date:"2026-06-17", delai:20, statut:"Nouvelle", agent:"—" },
+  { ref:"DEM-012", objet:"Légalisation de signature", service:"État civil", date:"2026-06-13", delai:2, statut:"Traitée", agent:"Mme Petit" },
+];
+
+function badgeStatut(s) {
+  const m = { "Nouvelle":"b-new","En cours":"b-progress","Traitée":"b-done","En retard":"b-late" };
+  return `<span class="badge ${m[s]||''}">${s}</span>`;
+}
+function delaiClass(d, s) {
+  if (s==="En retard") return "d-late";
+  if (d<=5) return "d-ok";
+  if (d<=15) return "d-warn";
+  return "";
+}
+function fmt(d) { const [y,m,j]=d.split("-"); return `${j}/${m}/${y}`; }
+
+function render() {
+  const srv = document.getElementById("filterService").value;
+  const sts = document.getElementById("filterStatut").value;
+  const f = demandes.filter(d=>(!srv||d.service===srv)&&(!sts||d.statut===sts));
+  const tbody = document.getElementById("tbody");
+  tbody.innerHTML = f.length
+    ? f.map(d=>`<tr>
+        <td class="ref">${d.ref}</td>
+        <td>${d.objet}</td>
+        <td>${d.service}</td>
+        <td>${fmt(d.date)}</td>
+        <td class="${delaiClass(d.delai,d.statut)}">${d.delai} j</td>
+        <td>${badgeStatut(d.statut)}</td>
+        <td class="agent-cell">${d.agent}</td>
+      </tr>`).join("")
+    : `<tr><td colspan="7" class="empty">Aucune demande pour ces critères</td></tr>`;
+
+  const total = demandes.length;
+  const nouvelles = demandes.filter(d=>d.statut==="Nouvelle").length;
+  const retard = demandes.filter(d=>d.statut==="En retard").length;
+  const traitees = demandes.filter(d=>d.statut==="Traitée").length;
+  document.getElementById("metrics").innerHTML = `
+    <div class="metric m-blue"><div class="metric-label">Total demandes</div><div class="metric-value">${total}</div><div class="metric-sub">depuis le 1er juin</div></div>
+    <div class="metric m-orange"><div class="metric-label">Nouvelles</div><div class="metric-value">${nouvelles}</div><div class="metric-sub">non assignées</div></div>
+    <div class="metric m-red"><div class="metric-label">En retard</div><div class="metric-value">${retard}</div><div class="metric-sub">délai dépassé</div></div>
+    <div class="metric m-green"><div class="metric-label">Traitées</div><div class="metric-value">${traitees}</div><div class="metric-sub">${Math.round(traitees/total*100)}% du total</div></div>`;
+}
+render();
+</script>
+</body>
+</html>
