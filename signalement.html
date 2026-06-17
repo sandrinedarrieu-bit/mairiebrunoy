@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signalement habitant · Brunoy</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--blue:#1B3A6B;--blue-light:#DCE9F5;--orange:#E8511A;--orange-light:#FEF0EA;--green:#1A6B3A;--green-light:#DCF5E4;--border:#E2E8F0;--text:#1A1A2E;--muted:#64748B;--bg:#fff;--radius:10px;--radius-sm:6px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F1F4F9;color:var(--text);min-height:100vh;padding:20px}
+.page{max-width:720px;margin:0 auto}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--blue);font-size:13px;font-weight:500;text-decoration:none;margin-bottom:16px;padding:6px 12px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm)}
+.back:hover{background:#F7F8FA}
+.card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.card-header{background:var(--blue);padding:20px 24px;display:flex;justify-content:space-between;align-items:center}
+.card-header h1{color:#fff;font-size:18px;font-weight:600}
+.card-header p{color:#A0C4E8;font-size:13px;margin-top:3px}
+.badge-demo{background:rgba(255,255,255,0.15);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.card-body{padding:24px}
+.info-bar{background:var(--blue-light);border:1px solid #B5D4F4;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:20px;font-size:13px;color:var(--blue)}
+.form-group{margin-bottom:16px}
+label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
+.required{color:var(--orange)}
+input[type=text],input[type=email],select,textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;color:var(--text);background:var(--bg);font-family:inherit;transition:border-color 0.15s}
+input[type=text]:focus,input[type=email]:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue)}
+textarea{resize:vertical;min-height:90px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-hint{font-size:12px;color:var(--muted);margin-top:4px}
+.btn{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;transition:background 0.15s;margin-top:8px}
+.btn:hover{background:var(--orange)}
+.success{display:none;background:var(--green-light);border:1px solid #9FE1CB;border-radius:var(--radius);padding:24px;text-align:center}
+.success-icon{font-size:36px;margin-bottom:12px}
+.success h2{color:var(--green);font-size:18px;font-weight:600;margin-bottom:8px}
+.success p{color:#444;font-size:14px;line-height:1.6;margin-bottom:4px}
+.success .ref{font-family:'Courier New',monospace;font-size:13px;background:rgba(0,0,0,0.06);padding:4px 10px;border-radius:4px;color:var(--green)}
+.success-note{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.btn-reset{margin-top:14px;background:none;border:1px solid var(--border);color:var(--muted);font-size:13px;padding:8px 16px;border-radius:var(--radius-sm);cursor:pointer;width:auto}
+.btn-reset:hover{background:#F7F8FA}
+.sidebar{margin-top:16px;background:#fff;border:1px solid var(--border);border-left:4px solid var(--orange);border-radius:var(--radius-sm);padding:14px 16px}
+.sidebar h3{font-size:13px;font-weight:600;color:var(--blue);margin-bottom:8px}
+.sidebar p{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px}
+.sidebar p:last-child{margin-bottom:0}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="page">
+<a href="index.html" class="back">← Retour aux démonstrations</a>
+
+<div class="card">
+  <div class="card-header">
+    <div><h1>Signalement d'un problème</h1><p>Ville de Brunoy — Service en ligne</p></div>
+    <span class="badge-demo">Outil 2 — Démonstration</span>
+  </div>
+  <div class="card-body">
+    <div class="info-bar">ℹ️ Dans la version réelle, ce formulaire alimenterait automatiquement la base de suivi des agents et enverrait un vrai accusé de réception par email.</div>
+
+    <div id="formZone">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom <span class="required">*</span></label>
+          <input type="text" id="prenom" placeholder="Votre prénom">
+        </div>
+        <div class="form-group">
+          <label>Nom <span class="required">*</span></label>
+          <input type="text" id="nom" placeholder="Votre nom">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email <span class="required">*</span></label>
+        <input type="email" id="email" placeholder="votre@email.fr">
+        <div class="form-hint">Un accusé de réception vous sera envoyé à cette adresse</div>
+      </div>
+      <div class="form-group">
+        <label>Type de signalement <span class="required">*</span></label>
+        <select id="type">
+          <option value="">— Sélectionnez —</option>
+          <option value="Voirie">Voirie (nid-de-poule, trottoir…)</option>
+          <option value="Éclairage">Éclairage public défectueux</option>
+          <option value="Propreté">Propreté / dépôt sauvage</option>
+          <option value="Espaces verts">Espaces verts</option>
+          <option value="Autre">Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Adresse du problème <span class="required">*</span></label>
+        <input type="text" id="adresse" placeholder="Ex : 12 rue de la Paix, Brunoy">
+      </div>
+      <div class="form-group">
+        <label>Description <span class="required">*</span></label>
+        <textarea id="description" placeholder="Décrivez le problème en quelques mots…"></textarea>
+      </div>
+      <button class="btn" onclick="soumettre()">Envoyer le signalement</button>
+      <p id="error" style="color:#A32D2D;font-size:13px;margin-top:8px;display:none">Veuillez remplir tous les champs obligatoires.</p>
+    </div>
+
+    <div class="success" id="success">
+      <div class="success-icon">✅</div>
+      <h2>Signalement enregistré</h2>
+      <p>Merci <strong id="s-nom"></strong>, votre signalement a bien été reçu.</p>
+      <p>Référence : <span class="ref" id="s-ref"></span></p>
+      <p style="margin-top:8px">Un accusé de réception a été envoyé à <strong id="s-email"></strong></p>
+      <div class="success-note">Délai de traitement estimé : 7 jours ouvrés · Le service <strong id="s-type"></strong> a été notifié</div>
+      <button class="btn-reset" onclick="reset()">Faire un nouveau signalement</button>
+    </div>
+  </div>
+</div>
+
+<div class="sidebar">
+  <h3>Comment ça fonctionne en conditions réelles</h3>
+  <p><strong>Ce que fait l'habitant :</strong> remplit ce formulaire depuis son téléphone ou ordinateur. Reçoit immédiatement un email de confirmation avec sa référence de dossier.</p>
+  <p><strong>Ce que font les agents :</strong> le signalement apparaît automatiquement dans le tableau de bord (outil 1), assigné au bon service. Aucune ressaisie manuelle.</p>
+  <p><strong>Limite :</strong> ce formulaire ne convient qu'aux signalements standardisables. Les urgences et situations complexes nécessitent un appel direct au service concerné.</p>
+</div>
+</div>
+
+<script>
+let counter = 100;
+function soumettre(){
+  const p=document.getElementById("prenom").value.trim();
+  const n=document.getElementById("nom").value.trim();
+  const e=document.getElementById("email").value.trim();
+  const t=document.getElementById("type").value;
+  const a=document.getElementById("adresse").value.trim();
+  const desc=document.getElementById("description").value.trim();
+  if(!p||!n||!e||!t||!a||!desc){document.getElementById("error").style.display="block";return}
+  document.getElementById("error").style.display="none";
+  counter++;
+  const ref="SIG-"+String(counter).padStart(3,"0");
+  document.getElementById("s-nom").textContent=p+" "+n;
+  document.getElementById("s-ref").textContent=ref;
+  document.getElementById("s-email").textContent=e;
+  document.getElementById("s-type").textContent=t;
+  document.getElementById("formZone").style.display="none";
+  document.getElementById("success").style.display="block";
+}
+function reset(){
+  document.getElementById("prenom").value="";
+  document.getElementById("nom").value="";
+  document.getElementById("email").value="";
+  document.getElementById("type").value="";
+  document.getElementById("adresse").value="";
+  document.getElementById("description").value="";
+  document.getElementById("formZone").style.display="block";
+  document.getElementById("success").style.display="none";
+}
+</script>
+</body>
+</html>
