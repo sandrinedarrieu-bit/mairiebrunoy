@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brunoy Numérique — Cadrage stratégique 2026</title>
+<style>
+  :root {
+    --bleu:     #1B3F6E;
+    --bleu-m:   #2B5FA0;
+    --bleu-cl:  #EBF1FA;
+    --or:       #C68B2F;
+    --or-cl:    #FDF4E7;
+    --rouge:    #B83232;
+    --rouge-cl: #FBF0F0;
+    --vert:     #1F7A5C;
+    --vert-cl:  #EBF6F2;
+    --gris:     #F5F5F3;
+    --gris-m:   #9B9B96;
+    --texte:    #1A1A1A;
+    --texte-s:  #4A4A47;
+    --bord:     #DDD;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--texte);
+    background: #fff;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  /* ENTÊTE */
+  header {
+    background: var(--bleu);
+    color: #fff;
+    padding: 0;
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 32px 40px;
+  }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  h1 span { color: #F0B94A; }
+  .header-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.72);
+    max-width: 580px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-top: 20px;
+  }
+  .header-meta strong { color: rgba(255,255,255,0.85); }
+
+  /* NAV INTERNE */
+  nav.sticky {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    border-bottom: 1px solid var(--bord);
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  nav.sticky ul {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    gap: 0;
+    list-style: none;
+    overflow-x: auto;
+  }
+  nav.sticky a {
+    display: block;
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--texte-s);
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  nav.sticky a:hover { color: var(--bleu-m); border-bottom-color: var(--bleu-m); }
+
+  /* CONTENU */
+  main { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+
+  section { padding: 56px 0; border-bottom: 1px solid var(--bord); }
+  section:last-child { border-bottom: none; }
+
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gris-m);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  h2 {
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  .section-intro {
+    font-size: 16px;
+    color: var(--texte-s);
+    max-width: 660px;
+    margin-bottom: 36px;
+    line-height: 1.7;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--texte);
+    margin-bottom: 6px;
+  }
+
+  /* ALERTE BLOC */
+  .alerte {
+    background: #FEF3CD;
+    border-left: 4px solid #C68B2F;
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: #5C3D0A;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  .alerte strong { font-weight: 600; }
+
+  /* CARDS GRILLE */
+  .grid { display: grid; gap: 16px; }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--bord);
+    border-radius: 12px;
+    padding: 22px 24px;
+  }
+  .card-rouge  { border-top: 4px solid var(--rouge); }
+  .card-or     { border-top: 4px solid var(--or); }
+  .card-vert   { border-top: 4px solid var(--vert); }
+  .card-bleu   { border-top: 4px solid var(--bleu-m); }
+
+  .card-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .icon-rouge { background: var(--rouge-cl); }
+  .icon-or    { background: var(--or-cl); }
+  .icon-vert  { background: var(--vert-cl); }
+  .icon-bleu  { background: var(--bleu-cl); }
+
+  .card p {
+    font-size: 14px;
+    color: var(--texte-s);
+    line-height: 1.6;
+    margin-top: 6px;
+  }
+  .card .ref-loi {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .ref-rouge { background: var(--rouge-cl); color: var(--rouge); }
+  .ref-or    { background: var(--or-cl); color: var(--or); }
+  .ref-vert  { background: var(--vert-cl); color: var(--vert); }
+  .ref-bleu  { background: var(--bleu-cl); color: var(--bleu-m); }
+
+  /* TABLEAU DE PRIORISATION */
+  .priorisation {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .priorisation thead th {
+    background: var(--gris);
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gris-m);
+    border-bottom: 1px solid var(--bord);
+  }
+  .priorisation tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--gris);
+    vertical-align: top;
+    color: var(--texte-s);
+    line-height: 1.5;
+  }
+  .priorisation tbody tr:last-child td { border-bottom: none; }
+  .priorisation tbody td:first-child {
+    font-weight: 600;
+    color: var(--texte);
+    white-space: nowrap;
+  }
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .pill-rouge { background: var(--rouge-cl); color: var(--rouge); }
+  .pill-or    { background: var(--or-cl); color: var(--or); }
+  .pill-vert  { background: var(--vert-cl); color: var(--vert); }
+  .pill-gris  { background: var(--gris); color: var(--gris-m); }
+
+  /* SECTION CONTRAINTES TRANSVERSALES */
+  .contrainte-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .contrainte-list li {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 18px 20px;
+    background: var(--gris);
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .contrainte-list li .ct-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .contrainte-list li strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--texte);
+    margin-bottom: 3px;
+  }
+  .contrainte-list li .ct-note {
+    font-size: 13px;
+    color: var(--texte-s);
+  }
+
+  /* BLOC CE QU'ON NE FAIT PAS */
+  .stop-block {
+    background: var(--rouge-cl);
+    border: 1px solid #E8C0C0;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 16px;
+  }
+  .stop-block h3 {
+    color: var(--rouge);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stop-block p { font-size: 14px; color: #6B2020; line-height: 1.6; }
+
+  /* ROADMAP VISUELLE */
+  .roadmap { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 28px;
+    bottom: 28px;
+    width: 2px;
+    background: var(--bord);
+  }
+  .rm-item {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    padding: 20px 0;
+  }
+  .rm-num {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .rm-rouge { background: var(--rouge); color: #fff; }
+  .rm-or    { background: var(--or); color: #fff; }
+  .rm-vert  { background: var(--vert); color: #fff; }
+  .rm-bleu  { background: var(--bleu-m); color: #fff; }
+  .rm-body { padding-top: 8px; }
+  .rm-body h3 { font-size: 16px; margin-bottom: 4px; }
+  .rm-body p  { font-size: 14px; color: var(--texte-s); }
+  .rm-body .rm-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .rm-body .rm-tags span {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: var(--gris);
+    color: var(--texte-s);
+    border: 1px solid var(--bord);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bleu);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 32px;
+    font-size: 13px;
+    margin-top: 0;
+  }
+  footer strong { color: #fff; }
+
+  @media (max-width: 640px) {
+    .header-inner, main { padding-left: 20px; padding-right: 20px; }
+    nav.sticky ul { padding: 0 12px; }
+    nav.sticky a { padding: 12px 12px; font-size: 12px; }
+    .priorisation { font-size: 13px; }
+    .priorisation thead th, .priorisation tbody td { padding: 10px 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <p class="eyebrow">Mairie de Brunoy · Formation Data 2026 · Note de cadrage</p>
+    <h1>Numérique municipal :<br><span>ce qui est possible,</span><br>ce qui est obligatoire.</h1>
+    <p class="header-sub">Une lecture honnête des outils no-code et IA au regard des contraintes légales, humaines et techniques d'une commune de 26 000 habitants.</p>
+    <div class="header-meta">
+      <span><strong>Commune</strong> Brunoy, Île-de-France</span>
+      <span><strong>Population</strong> ~26 000 habitants</span>
+      <span><strong>Contexte</strong> Programme Formation Data 2026</span>
+      <span><strong>Document</strong> Cadrage stratégique — juin 2026</span>
+    </div>
+  </div>
+</header>
+
+<nav class="sticky" aria-label="Navigation de page">
+  <ul>
+    <li><a href="#existant">Ce qui existe</a></li>
+    <li><a href="#loi">Obligations légales</a></li>
+    <li><a href="#nocode">Ce que le no-code permet</a></li>
+    <li><a href="#absorb">Ce qu'une mairie peut absorber</a></li>
+    <li><a href="#roadmap">Feuille de route</a></li>
+    <li><a href="#nonon">Ce qu'on ne fait pas</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- ===== EXISTANT ===== -->
+  <section id="existant">
+    <p class="section-eyebrow">Diagnostic</p>
+    <h2>Ce qui existe déjà</h2>
+    <p class="section-intro">Avant d'ajouter des outils, il faut cartographier l'existant — logiciels en place, pratiques réelles des agents, frustrations et doublons. Trois outils ont déjà été prototypés dans le cadre de ce programme.</p>
+
+    <div class="alerte">
+      <strong>Point de méthode :</strong> les prototypes ci-dessous sont des démonstrateurs fonctionnels. Leur passage en production réclame une mise en conformité RGAA, un hébergement sur serveurs français et une fiche RGPD avant tout déploiement public.
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card card-bleu">
+        <div class="card-icon icon-bleu">📋</div>
+        <h3>Tableau de bord demandes</h3>
+        <p>Centralisation et suivi des demandes citoyennes, quel que soit le canal d'entrée. Assignation par service, statut en temps réel.</p>
+        <span class="ref-loi ref-bleu">Démo disponible</span>
+      </div>
+      <div class="card card-bleu">
+        <div class="card-icon icon-bleu">📝</div>
+        <h3>Inscription activités</h3>
+        <p>Formulaire d'inscription aux activités municipales avec gestion de liste d'attente. Confirmation automatique par email.</p>
+        <span class="ref-loi ref-bleu">Démo disponible</span>
+      </div>
+      <div class="card card-bleu">
+        <div class="card-icon icon-bleu">✉️</div>
+        <h3>Rédaction courriers IA</h3>
+        <p>Assistant IA (Claude API) pour la rédaction de courriers administratifs types. Le projet reste validé par l'agent — l'IA rédige le brouillon.</p>
+        <span class="ref-loi ref-bleu">Démo disponible</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 28px; padding: 20px 24px; background: var(--gris); border-radius: 10px; font-size: 14px; color: var(--texte-s); line-height: 1.7;">
+      <strong style="color: var(--texte); display: block; margin-bottom: 6px;">Ce que ce programme ne remplace pas</strong>
+      Les logiciels métiers en place — paie, RH, comptabilité publique, état civil — restent la colonne vertébrale du système d'information municipal. Le no-code se positionne en <em>couche intermédiaire</em> : il relie les silos, automatise les tâches manuelles entre systèmes, et produit des interfaces de pilotage là où les éditeurs historiques n'en proposent pas.
+    </div>
+  </section>
+
+  <!-- ===== OBLIGATIONS LÉGALES ===== -->
+  <section id="loi">
+    <p class="section-eyebrow">Cadre juridique</p>
+    <h2>Ce que la loi impose</h2>
+    <p class="section-intro">Pour une commune de plus de 3 500 habitants comme Brunoy, plusieurs obligations numériques sont déjà en vigueur. Elles ne sont pas optionnelles — leur non-respect expose la collectivité à des risques juridiques et financiers.</p>
+
+    <div class="grid grid-2" style="margin-bottom: 28px;">
+      <div class="card card-rouge">
+        <div class="card-icon icon-rouge">⚖️</div>
+        <h3>Délibérations dématérialisées</h3>
+        <p>Depuis le 1er juillet 2022 (Loi 3DS), les actes réglementaires et documents budgétaires doivent être publiés en ligne. La télétransmission au contrôle de légalité préfectoral se fait via le protocole ACTES.</p>
+        <span class="ref-loi ref-rouge">Loi 3DS — Obligatoire depuis 2022</span>
+      </div>
+      <div class="card card-rouge">
+        <div class="card-icon icon-rouge">♿</div>
+        <h3>Accessibilité numérique RGAA 4.1</h3>
+        <p>Tout service numérique public — site web, application, outil interne exposé au public — doit atteindre le niveau AA du référentiel RGAA. La déclaration d'accessibilité est obligatoire sur chaque service.</p>
+        <span class="ref-loi ref-rouge">Loi République Numérique 2016</span>
+      </div>
+      <div class="card card-rouge">
+        <div class="card-icon icon-rouge">📬</div>
+        <h3>Saisine électronique + accusé de réception</h3>
+        <p>Toute demande dématérialisée d'un citoyen doit recevoir un accusé de réception automatique horodaté, avec les coordonnées de la mairie. La réponse doit intervenir dans les délais légaux.</p>
+        <span class="ref-loi ref-rouge">Décret 2016-1491</span>
+      </div>
+      <div class="card card-rouge">
+        <div class="card-icon icon-rouge">🔒</div>
+        <h3>RGPD — Protection des données</h3>
+        <p>Un registre des traitements doit être tenu à jour. Un DPO (délégué à la protection des données) doit être nommé ou mutualisé via l'EPCI. Chaque outil numérique = une fiche de traitement.</p>
+        <span class="ref-loi ref-rouge">RGPD — Mai 2018</span>
+      </div>
+      <div class="card card-or">
+        <div class="card-icon icon-or">🖥️</div>
+        <h3>Hébergement sur serveurs français</h3>
+        <p>Les données personnelles des administrés doivent être hébergées sur des serveurs situés en France. Les solutions américaines (Vercel, Airtable US) sont incompatibles avec cette obligation en production.</p>
+        <span class="ref-loi ref-or">RGPD + Guide CNIL collectivités</span>
+      </div>
+      <div class="card card-or">
+        <div class="card-icon icon-or">📄</div>
+        <h3>Documents d'urbanisme en ligne</h3>
+        <p>PLU, cartes communales et documents Scot doivent être publiés en ligne au standard Cnig, et disponibles sur le Géoportail de l'urbanisme.</p>
+        <span class="ref-loi ref-or">Loi ALUR — En vigueur</span>
+      </div>
+    </div>
+
+    <div style="padding: 20px 24px; background: var(--rouge-cl); border-radius: 10px; font-size: 14px; color: #5A1A1A; line-height: 1.7;">
+      <strong style="display: block; margin-bottom: 4px;">⚠️ Ce qu'une infraction peut coûter</strong>
+      La non-conformité aux mentions légales obligatoires (LCEN) peut représenter jusqu'à 375 000 € d'amende pour une personne morale. Un acte délibératif mal transmis à la préfecture peut être annulé. Un outil non conforme RGAA expose la collectivité à des recours.
+    </div>
+  </section>
+
+  <!-- ===== CE QUE LE NO-CODE PERMET ===== -->
+  <section id="nocode">
+    <p class="section-eyebrow">Potentiel réel</p>
+    <h2>Ce que le no-code et l'IA permettent concrètement</h2>
+    <p class="section-intro">Le no-code ne remplace pas les logiciels métiers. Il comble les angles morts — les processus manuels qui s'accumulent dans les emails, les tableurs et les post-its des agents.</p>
+
+    <div style="margin-bottom: 32px;">
+      <table class="priorisation">
+        <thead>
+          <tr>
+            <th>Besoin</th>
+            <th>Outil recommandé</th>
+            <th>Ce que ça résout</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Suivi demandes citoyens</td>
+            <td>Airtable + Make + Interface Vercel</td>
+            <td>Fin des emails perdus, statut visible, accusé réception légal automatique</td>
+            <td><span class="pill pill-vert">Prototype existant</span></td>
+          </tr>
+          <tr>
+            <td>Planning agents & absences</td>
+            <td>Airtable + Make + Softr ou Glide</td>
+            <td>Vue consolidée pour les encadrants, sans toucher au logiciel RH existant</td>
+            <td><span class="pill pill-or">À construire</span></td>
+          </tr>
+          <tr>
+            <td>Suivi marchés publics</td>
+            <td>Airtable + Make (alertes)</td>
+            <td>Alertes d'échéance automatiques, tableau de bord DGS, seuils MAPA visibles</td>
+            <td><span class="pill pill-or">À construire</span></td>
+          </tr>
+          <tr>
+            <td>Signalements citoyens</td>
+            <td>Bubble + Airtable</td>
+            <td>Voirie, propreté, éclairage — citoyen suit son ticket, agent traite en interne</td>
+            <td><span class="pill pill-or">À construire</span></td>
+          </tr>
+          <tr>
+            <td>Réservation salles communales</td>
+            <td>Softr ou Bubble + Google Calendar</td>
+            <td>Associations et particuliers réservent en ligne, agent valide, confirmation auto</td>
+            <td><span class="pill pill-or">À construire</span></td>
+          </tr>
+          <tr>
+            <td>Portail associations</td>
+            <td>Softr + Airtable</td>
+            <td>Dépôt dossiers subventions, suivi instruction, annuaire — allège le secrétariat</td>
+            <td><span class="pill pill-or">À construire</span></td>
+          </tr>
+          <tr>
+            <td>Assistant IA agents</td>
+            <td>Claude API + Vercel serverless</td>
+            <td>Chat sur procédures internes, délais légaux, modèles de courriers — usage interne uniquement</td>
+            <td><span class="pill pill-vert">Prototype existant</span></td>
+          </tr>
+          <tr>
+            <td>Délibérations & actes ACTES</td>
+            <td>Logiciel métier certifié (Berger-Levrault, JVS…)</td>
+            <td>Obligation légale — protocole certifié obligatoire, risque juridique trop élevé en custom</td>
+            <td><span class="pill pill-rouge">Hors périmètre no-code</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="padding: 20px 24px; background: var(--vert-cl); border-radius: 10px; font-size: 14px; color: #0E3D2A; line-height: 1.7;">
+      <strong style="display: block; margin-bottom: 4px;">✅ La valeur réelle du no-code dans ce contexte</strong>
+      Là où les éditeurs historiques facturent 12 à 18 mois de déploiement et des licences annuelles lourdes, le no-code permet de livrer des outils opérationnels en 4 à 8 semaines, modifiables sans prestataire, et adaptables aux retours terrain des agents. C'est un levier d'agilité, pas un substitut aux systèmes d'information structurants.
+    </div>
+  </section>
+
+  <!-- ===== CE QU'UNE MAIRIE PEUT ABSORBER ===== -->
+  <section id="absorb">
+    <p class="section-eyebrow">Réalité humaine</p>
+    <h2>Ce qu'une mairie de 26 000 hab. peut absorber</h2>
+    <p class="section-intro">L'outil le mieux conçu ne sert à rien si les agents ne l'adoptent pas. La capacité d'absorption d'une collectivité est limitée — par le temps, les compétences disponibles et la résistance naturelle au changement.</p>
+
+    <ul class="contrainte-list">
+      <li>
+        <span class="ct-icon">👥</span>
+        <div>
+          <strong>1 outil à la fois, par service</strong>
+          <span class="ct-note">Déployer trois outils simultanément garantit que les trois seront abandonnés. Un pilote par service, avec un référent identifié, une formation courte (2h max) et un support réel les premières semaines. La montée en charge vient ensuite.</span>
+        </div>
+      </li>
+      <li>
+        <span class="ct-icon">📱</span>
+        <div>
+          <strong>Interfaces mobiles pour les agents de terrain</strong>
+          <span class="ct-note">Les agents techniques, les services à domicile, la police municipale — ils n'ont pas de bureau. Les outils doivent fonctionner depuis un smartphone. Glide, Softr et les formulaires Tally/Airtable répondent à ce besoin nativement.</span>
+        </div>
+      </li>
+      <li>
+        <span class="ct-icon">🔧</span>
+        <div>
+          <strong>Maintenabilité sans prestataire</strong>
+          <span class="ct-note">Un outil qui dépend entièrement d'un prestataire externe pour la moindre modification devient un boulet budgétaire. Les agents référents doivent pouvoir modifier les formulaires, les automatisations simples, les vues Airtable. C'est ce que permet le no-code — et c'est l'objectif de la formation.</span>
+        </div>
+      </li>
+      <li>
+        <span class="ct-icon">⚡</span>
+        <div>
+          <strong>Des victoires rapides, visibles, mesurables</strong>
+          <span class="ct-note">Le premier outil doit résoudre un problème douloureux et concret — pas le plus ambitieux, le plus douloureux. La réservation des salles gérée par email est un candidat idéal : la douleur est réelle, la solution est simple, le ROI se mesure en heures économisées dès la première semaine.</span>
+        </div>
+      </li>
+      <li>
+        <span class="ct-icon">🗂️</span>
+        <div>
+          <strong>Un DPO impliqué dès le départ</strong>
+          <span class="ct-note">Chaque outil manipulant des données personnelles (citoyens ou agents) nécessite une fiche de traitement RGPD. Le DPO — ou la structure mutualisée via l'EPCI — doit être partenaire du projet dès la conception, pas consulté en fin de déploiement.</span>
+        </div>
+      </li>
+      <li>
+        <span class="ct-icon">📊</span>
+        <div>
+          <strong>Indicateurs de pilotage, pas de reporting</strong>
+          <span class="ct-note">Le DGS et les élus ont besoin de tableaux de bord synthétiques — pas de rapports de 30 pages. 3 à 5 indicateurs clés par domaine, mis à jour automatiquement, accessibles depuis un téléphone. C'est faisable avec Airtable et ses vues partagées dès la première semaine.</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===== ROADMAP ===== -->
+  <section id="roadmap">
+    <p class="section-eyebrow">Plan d'action</p>
+    <h2>Feuille de route recommandée</h2>
+    <p class="section-intro">Une progression en 4 étapes, ordonnées par urgence légale puis par valeur opérationnelle. Chaque étape est indépendante — on peut s'arrêter ou accélérer selon les ressources disponibles.</p>
+
+    <div class="roadmap">
+      <div class="rm-item">
+        <div class="rm-num rm-rouge">1</div>
+        <div class="rm-body">
+          <h3>Mise en conformité immédiate (J+30)</h3>
+          <p>Audit RGAA des 3 prototypes existants. Correction des points bloquants : contraste, navigation clavier, étiquettes formulaires. Hébergement production migré vers OVH/Scaleway. Déclaration d'accessibilité publiée sur chaque outil. Fiches RGPD rédigées avec le DPO.</p>
+          <div class="rm-tags">
+            <span>Audit ara.numerique.gouv.fr</span>
+            <span>OVH / Scaleway</span>
+            <span>DPO</span>
+          </div>
+        </div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-num rm-or">2</div>
+        <div class="rm-body">
+          <h3>Outil pilote à fort impact (J+60)</h3>
+          <p>Choisir UN outil parmi : réservation salles, signalements citoyens, ou portail associations. Déployer avec un service pilote, former le référent, mesurer l'adoption à 30 jours. Ajuster avant d'étendre.</p>
+          <div class="rm-tags">
+            <span>Bubble ou Softr</span>
+            <span>Airtable + Make</span>
+            <span>Formation 2h référent</span>
+          </div>
+        </div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-num rm-vert">3</div>
+        <div class="rm-body">
+          <h3>Outils internes agents (J+90 à J+180)</h3>
+          <p>Planning et absences agents, suivi marchés publics, suivi des travaux et interventions. Ces outils sont invisibles des citoyens — contraintes RGAA allégées, déploiement plus rapide. Ils réduisent la charge cognitive des encadrants et du DGS.</p>
+          <div class="rm-tags">
+            <span>Airtable</span>
+            <span>Make (alertes)</span>
+            <span>Glide (mobile terrain)</span>
+          </div>
+        </div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-num rm-bleu">4</div>
+        <div class="rm-body">
+          <h3>Assistant IA agents — consolidation (J+180+)</h3>
+          <p>Étendre l'assistant IA aux procédures RH, marchés publics et réponses aux courriers d'urbanisme. L'IA reste un outil de rédaction — l'agent valide et signe toujours. Documenter la chaîne de validation pour la CNIL.</p>
+          <div class="rm-tags">
+            <span>Claude API</span>
+            <span>Vercel serverless</span>
+            <span>Usage interne uniquement</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CE QU'ON NE FAIT PAS ===== -->
+  <section id="nonon">
+    <p class="section-eyebrow">Périmètre</p>
+    <h2>Ce qu'on ne fait pas en no-code</h2>
+    <p class="section-intro">La clarté sur les limites est aussi importante que l'enthousiasme sur les possibilités. Ces briques restent hors périmètre, et pour de bonnes raisons.</p>
+
+    <div class="stop-block">
+      <h3>🚫 Gestion des délibérations et télétransmission ACTES</h3>
+      <p>Le protocole ACTES requiert un logiciel certifié par la Direction Interministérielle du Numérique. Un acte délibératif mal transmis peut être annulé. Un acte invalide peut engager la responsabilité juridique de la collectivité. Ce n'est pas un terrain d'expérimentation — c'est Berger-Levrault, JVS, Mégalis ou équivalent, avec certification et support dédié.</p>
+    </div>
+    <div class="stop-block">
+      <h3>🚫 Paie et RH réglementaire</h3>
+      <p>La paie des agents publics est soumise au statut de la fonction publique territoriale. Les logiciels métiers (Civil Net RH, Sedit RH, etc.) intègrent les évolutions réglementaires automatiquement. Le no-code peut se greffer dessus pour des vues de pilotage, pas se substituer à eux.</p>
+    </div>
+    <div class="stop-block">
+      <h3>🚫 Comptabilité publique et mandatement</h3>
+      <p>La comptabilité M57, les marchés dématérialisés sur Chorus Pro, et le mandatement électronique sont des domaines certifiés avec des auditeurs. Un tableau Airtable peut servir de couche de suivi, jamais de système comptable.</p>
+    </div>
+    <div class="stop-block">
+      <h3>🚫 État civil dématérialisé</h3>
+      <p>Les actes d'état civil (naissances, mariages, décès) sont soumis à des exigences d'authenticité, de conservation et de signature électronique qualifiée. C'est un domaine régalien — aucun outil no-code ne peut y répondre légalement.</p>
+    </div>
+
+    <div style="margin-top: 28px; padding: 20px 24px; background: var(--vert-cl); border-radius: 10px; font-size: 14px; color: #0E3D2A; line-height: 1.7;">
+      <strong style="display: block; margin-bottom: 4px;">💡 La bonne posture</strong>
+      Le no-code et l'IA municipal ne remplacent pas les logiciels métiers — ils les connectent, les prolongent, et comblent les angles morts que ces logiciels ne couvrent pas. Cette posture d'intégration, plutôt que de substitution, est ce qui rend le projet crédible auprès du DGS, des élus et des agents.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Document de cadrage · Programme Formation Data Brunoy 2026 · <strong>CHIC OUF</strong> · Consultante no-code & IA · Juin 2026</p>
+</footer>
+
+</body>
+</html>
